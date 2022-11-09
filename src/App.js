@@ -8,12 +8,12 @@ import {
   Route,
   NavLink,
   RouterProvider,
-  createBrowserRouter,
+  createHashRouter,
   createRoutesFromElements,
 } from "react-router-dom";
 import NotFoundPage from "./routes/NotFoundPage";
 
-const router = createBrowserRouter(
+const router = createHashRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Users />} loader={usersLoader} />
