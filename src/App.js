@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import Users, { loader as usersLoader } from "./routes/Users";
+import User, { userLoader as userLoader } from "./routes/User";
+import Album, { loader as albumLoader } from "./routes/Album";
+import { Layout } from "./routes/Layout";
+import Albums, { loader as albumsLoader } from "./routes/Albums";
+import {
+  Routes,
+  Route,
+  NavLink,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
+import NotFoundPage from "./routes/NotFoundPage";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Layout />}>
+      <Route index element={<Users />} loader={usersLoader} />
+      <Route path="albums" element={<Albums />} loader={albumsLoader} />
+      <Route path=":id" element={<User />} loader={userLoader} />
+      <Route path="albums/:id" element={<Album />} loader={albumLoader} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Route>
+  )
+);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
