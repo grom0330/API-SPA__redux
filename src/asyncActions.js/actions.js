@@ -1,4 +1,5 @@
-import { addManyAlbumsAction } from "../store/albumReducer";
+import { addAlbumAction, addManyAlbumsAction } from "../store/albumReducer";
+import { addPhotoAction } from "../store/photoReducer";
 import { addManyUsersAction, addUserAction } from "../store/userReducer";
 
 export const fetchUsers = () => {
@@ -30,5 +31,21 @@ export const fetchAllAlbums = () => {
     fetch("https://jsonplaceholder.typicode.com/albums")
       .then((r) => r.json())
       .then((json) => dispatch(addManyAlbumsAction(json)));
+  };
+};
+
+export const fetchAlbumsById = (id) => {
+  return function (dispatch) {
+    fetch(`https://jsonplaceholder.typicode.com/albums/${id}`)
+      .then((r) => r.json())
+      .then((json) => dispatch(addAlbumAction(json)));
+  };
+};
+
+export const fetchPhoto = (id) => {
+  return function (dispatch) {
+    fetch(`https://jsonplaceholder.typicode.com/photos/?albumId=${id}`)
+      .then((r) => r.json())
+      .then((json) => dispatch(addPhotoAction(json)));
   };
 };

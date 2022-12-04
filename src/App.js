@@ -19,7 +19,7 @@ const router = createHashRouter(
       <Route index element={<Users />} />
       <Route path="albums" element={<Albums />} />
       <Route path=":id" element={<User />} />
-      <Route path="albums/:id" element={<Album />} loader={albumLoader} />
+      <Route path="albums/:id" element={<Album />} />
       <Route path="*" element={<NotFoundPage />} />
     </Route>
   )
