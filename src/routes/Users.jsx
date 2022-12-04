@@ -1,21 +1,15 @@
-import React, { useCallback } from "react";
-import { useNavigate, Link, useLoaderData } from "react-router-dom";
-
-export const loader = async () => {
-  const users = await fetch("https://jsonplaceholder.typicode.com/users").then(
-    (r) => r.json()
-  );
-  return { users };
-};
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { fetchUsers } from "../asyncActions.js/actions";
 
 export default function Users() {
-  const navigate = useNavigate();
-  const navigateToUser = useCallback(
-    (id) => () => navigate(`${id}`),
-    [navigate]
-  );
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.users.users);
 
-  const { users } = useLoaderData();
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
 
   return (
     <div
@@ -26,12 +20,12 @@ export default function Users() {
     >
       {users.map((user) => (
         <div
+          key={user.id}
           style={{
             margin: "2px 0",
           }}
         >
           <Link
-            key={user.id}
             to={`${user.id}`}
             style={{
               textDecoration: "none",

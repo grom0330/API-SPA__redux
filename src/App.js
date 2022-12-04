@@ -16,7 +16,7 @@ import NotFoundPage from "./routes/NotFoundPage";
 const router = createHashRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
-      <Route index element={<Users />} loader={usersLoader} />
+      <Route index element={<Users />} />
       <Route path="albums" element={<Albums />} loader={albumsLoader} />
       <Route path=":id" element={<User />} loader={userLoader} />
       <Route path="albums/:id" element={<Album />} loader={albumLoader} />
