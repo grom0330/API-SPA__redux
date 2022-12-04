@@ -1,22 +1,16 @@
-import React, { useCallback } from "react";
-import { useNavigate, Link, useLoaderData } from "react-router-dom";
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import img from "../album-icon.png";
-
-export const loader = async () => {
-  const albums = await fetch(
-    "https://jsonplaceholder.typicode.com/albums"
-  ).then((r) => r.json());
-  return { albums };
-};
+import { fetchAllAlbums } from "../asyncActions.js/actions";
 
 export default function Albums() {
-  const navigate = useNavigate();
-  const navigateToAlbum = useCallback(
-    (id) => () => navigate(`${id}`),
-    [navigate]
-  );
+  const dispatch = useDispatch();
+  const albums = useSelector((state) => state.albums.albums);
 
-  const { albums } = useLoaderData();
+  useEffect(() => {
+    dispatch(fetchAllAlbums());
+  }, []);
 
   return (
     <div
@@ -27,7 +21,7 @@ export default function Albums() {
       }}
     >
       {albums.map((album) => (
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div key={album.id} style={{ display: "flex", alignItems: "center" }}>
           <img
             src={img}
             style={{
